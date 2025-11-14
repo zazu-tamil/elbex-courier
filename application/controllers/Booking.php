@@ -29,6 +29,7 @@ class Booking extends CI_Controller {
           
        return $rec_list;
     }
+    
      
     public function create_booking()
 	{

@@ -107,191 +107,227 @@
       </table>
 
       <!-- Add Receipt Modal -->
-      <div class="modal fade" id="add_modal" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
+  <div class="modal fade" id="add_modal" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
             <form method="post" action="" id="frmadd">
-              <div class="modal-header">
-                <h3 class="modal-title" id="scrollmodalLabel">Add Receipt</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <input type="hidden" name="mode" value="Add" />
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label>Receipt Date</label>
-                    <input class="form-control" type="date" name="receipt_date" id="receipt_date" value="" required>                                             
-                  </div> 
-                   <div class="form-group col-md-6">
-                    <label>Payment Type <span style="color:red;">*</span></label>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="payment_type" value="Paid" checked="true" /> Paid
-                      </label> 
+
+                <div class="modal-header">
+                    <h3 class="modal-title" id="scrollmodalLabel">Add Receipt</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <input type="hidden" name="mode" value="Add" />
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- Row 1 -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Receipt Date</label>
+                            <input class="form-control" type="date" name="receipt_date" id="receipt_date" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Payment Type <span style="color:red;">*</span></label>
+                            <div>
+                                <label class="radio-inline">
+                                    <input type="radio" name="payment_type" value="Paid" checked> Paid
+                                </label>
+                                <label class="radio-inline" style="margin-left:10px;">
+                                    <input type="radio" name="payment_type" value="Received"> Received
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="payment_type" value="Received" /> Received
-                      </label>
-                    </div> 
-                  </div>
-                  <!-- <div class="form-group col-md-6">
-                    <label>Receipt No</label>
-                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required>                                             
-                  </div>   -->
-                </div> 
 
-                <div class="row"> 
-                  <div class="form-group col-md-6">
-                    <label>Payment Mode <span style="color:red;">*</span></label>
-                    <?php echo form_dropdown('payment_mode', $payment_mode_opt, '', ' id="payment_mode" class="form-control" required');?>
-                  </div>
-               
-                   <div class="form-group col-md-6">
-                    <label>Receipt From</label>
-                    <input class="form-control" type="text" name="receipt_from" id="receipt_from" value="" placeholder="From" required>                                             
-                  </div> 
-                  </div> 
-
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label>Receipt To</label>
-                    <input class="form-control" type="text" name="receipt_to" id="receipt_to" value="" placeholder="To" required>                                             
-                  </div>
+                    <!-- Receipt No (optional) -->
+                    <!--
                     <div class="form-group col-md-6">
-                    <label>Branch</label>
-                    <input class="form-control" type="text" name="branch" id="branch" value="" placeholder="Branch Name" required>                                             
-                  </div> 
-                </div>
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label>Amount</label>
-                    <input class="form-control" type="number" step="0.01" name="payment_amt" id="payment_amt" value="" placeholder="0.00" required>                                             
-                  </div>
-                     <div class="form-group col-md-6">
-                    <label>Cheque/DD No</label>
-                    <input class="form-control" type="text" name="cheq_dd_no" id="cheq_dd_no" value="" placeholder="Cheque/DD Number">                                             
-                  </div> 
+                        <label>Receipt No</label>
+                        <input class="form-control" type="number" name="receipt_no" id="receipt_no" placeholder="0001" required>
+                    </div>
+                    -->
+
+                    <!-- Row 2 -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Payment Mode <span style="color:red;">*</span></label>
+                            <?php echo form_dropdown('payment_mode', $payment_mode_opt, '', 'id="payment_mode" class="form-control" required'); ?>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Receipt From</label>
+                            <input class="form-control" type="text" name="receipt_from" id="receipt_from" placeholder="From" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Receipt To</label>
+                            <input class="form-control" type="text" name="receipt_to" id="receipt_to" placeholder="To" required>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Branch</label>
+                            <input class="form-control" type="text" name="branch" id="branch" placeholder="Branch Name" required>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label>Amount</label>
+                            <input class="form-control" type="number" step="0.01" name="payment_amt" id="payment_amt" placeholder="0.00" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 4 (Cheque/DD) -->
+                    <div class="row" id="cheque_dd_row" style="display:none;">
+                        <div class="form-group col-md-6">
+                            <label>Cheque/DD No</label>
+                            <input class="form-control" type="text" name="cheq_dd_no" id="cheq_dd_no" placeholder="Cheque/DD Number">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Cheque/DD Date</label>
+                            <input class="form-control" type="date" name="cheq_dd_date" id="cheq_dd_date">
+                        </div>
+                    </div>
+
+                    <!-- Row 5 - Description -->
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Description</label>
+                            <textarea class="form-control" name="payment_desc" id="payment_desc" placeholder="Payment Description"></textarea>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="row" id="cheque_dd_row" style="display:none;">
-                  <div class="form-group col-md-6">
-                    <label>Cheque/DD Date</label>
-                    <input class="form-control" type="date" name="cheq_dd_date" id="cheq_dd_date" value="">                                             
-                  </div>
-                      <div class="form-group col-md-12">
-                    <label>Description</label>
-                    <textarea class="form-control" name="payment_desc" id="payment_desc" placeholder="Payment Description"></textarea>                                             
-                  </div>  
-                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="Save" value="Save" class="btn btn-primary" />
                 </div>
 
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
-                <input type="submit" name="Save" value="Save" class="btn btn-primary" />
-              </div> 
             </form>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
+
 
       <!-- Edit Receipt Modal -->
-      <div class="modal fade" id="edit_modal" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
+     <div class="modal fade" id="edit_modal" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
             <form method="post" action="" id="frmedit">
-              <div class="modal-header">
-                <h5 class="modal-title" id="scrollmodalLabel">Edit Receipt</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <input type="hidden" name="mode" value="Edit" />
-                <input type="hidden" name="receipt_id" id="receipt_id" />
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label>Receipt Date</label>
-                    <input class="form-control" type="date" name="receipt_date" id="receipt_date" value="" required>                                             
-                  </div> 
-                  <div class="form-group col-md-6">
-                    <label>Receipt No</label>
-                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required readonly>                                             
-                  </div>  
-                </div> 
 
-                <div class="row"> 
-                  <div class="form-group col-md-6">
-                    <label>Payment Type <span style="color:red;">*</span></label>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="payment_type" value="Paid" /> Paid
-                      </label> 
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scrollmodalLabel">Edit Receipt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <input type="hidden" name="mode" value="Edit" />
+                    <input type="hidden" name="receipt_id" id="receipt_id" />
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- Row 1 -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Receipt Date</label>
+                            <input class="form-control" type="date" name="receipt_date" id="receipt_date" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Receipt No</label>
+                            <input class="form-control" type="number" name="receipt_no" id="receipt_no" placeholder="0001" readonly required>
+                        </div>
                     </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="payment_type" value="Received" /> Received
-                      </label>
-                    </div> 
-                  </div>
 
-                  <div class="form-group col-md-6">
-                    <label>Payment Mode <span style="color:red;">*</span></label>
-                    <?php echo form_dropdown('payment_mode', $payment_mode_opt, '', ' id="payment_mode" class="form-control" required');?>
-                  </div>
+                    <!-- Row 2 -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Payment Type <span style="color:red;">*</span></label>
+
+                            <div>
+                                <label class="radio-inline">
+                                    <input type="radio" name="payment_type" value="Paid"> Paid
+                                </label>
+                                <label class="radio-inline" style="margin-left: 10px;">
+                                    <input type="radio" name="payment_type" value="Received"> Received
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Payment Mode <span style="color:red;">*</span></label>
+                            <?php echo form_dropdown('payment_mode', $payment_mode_opt, '', 'id="payment_mode" class="form-control" required'); ?>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Receipt From</label>
+                            <input class="form-control" type="text" name="receipt_from" id="receipt_from" placeholder="From" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Receipt To</label>
+                            <input class="form-control" type="text" name="receipt_to" id="receipt_to" placeholder="To" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Branch</label>
+                            <input class="form-control" type="text" name="branch" id="branch" placeholder="Branch Name" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Amount</label>
+                            <input class="form-control" type="number" step="0.01" name="payment_amt" id="payment_amt" placeholder="0.00" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 5 (Cheque/DD) -->
+                    <div class="row" id="cheque_dd_row" style="display:none;">
+                        <div class="form-group col-md-6">
+                            <label>Cheque/DD No</label>
+                            <input class="form-control" type="text" name="cheq_dd_no" id="cheq_dd_no" placeholder="Cheque/DD Number">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Cheque/DD Date</label>
+                            <input class="form-control" type="date" name="cheq_dd_date" id="cheq_dd_date">
+                        </div>
+                    </div>
+
+                    <!-- Row 6 -->
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Description</label>
+                            <textarea class="form-control" name="payment_desc" id="payment_desc" placeholder="Payment Description"></textarea>
+                        </div>
+                    </div>
+
+                </div> <!-- modal-body -->
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="Save" value="Update" class="btn btn-primary" />
                 </div>
 
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label>Receipt From</label>
-                    <input class="form-control" type="text" name="receipt_from" id="receipt_from" value="" placeholder="From" required>                                             
-                  </div> 
-                  <div class="form-group col-md-6">
-                    <label>Receipt To</label>
-                    <input class="form-control" type="text" name="receipt_to" id="receipt_to" value="" placeholder="To" required>                                             
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label>Branch</label>
-                    <input class="form-control" type="text" name="branch" id="branch" value="" placeholder="Branch Name" required>                                             
-                  </div> 
-                  <div class="form-group col-md-6">
-                    <label>Amount</label>
-                    <input class="form-control" type="number" step="0.01" name="payment_amt" id="payment_amt" value="" placeholder="0.00" required>                                             
-                  </div>
-                </div>
-
-                <div class="row" id="cheque_dd_row" style="display:none;">
-                  <div class="form-group col-md-6">
-                    <label>Cheque/DD No</label>
-                    <input class="form-control" type="text" name="cheq_dd_no" id="cheq_dd_no" value="" placeholder="Cheque/DD Number">                                             
-                  </div> 
-                  <div class="form-group col-md-6">
-                    <label>Cheque/DD Date</label>
-                    <input class="form-control" type="date" name="cheq_dd_date" id="cheq_dd_date" value="">                                             
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-12">
-                    <label>Description</label>
-                    <textarea class="form-control" name="payment_desc" id="payment_desc" placeholder="Payment Description"></textarea>                                             
-                  </div>  
-                </div>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
-                <input type="submit" name="Save" value="Update" class="btn btn-primary" />
-              </div> 
             </form>
-          </div>
+
         </div>
-      </div>
+    </div>
+</div>
+
     </div>
 
     <div class="box-footer">

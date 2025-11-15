@@ -4127,6 +4127,7 @@ class Master extends CI_Controller {
                 'cheq_dd_date' => $this->input->post('cheq_dd_date'),
                 'payment_desc' => $this->input->post('payment_desc'),
                 'payment_amt' => $this->input->post('payment_amt'),
+                'status' => 'Active',
                 'created_by' => $this->session->userdata('cr_user_id'),
                 'created_date' => date('Y-m-d H:i:s')
             );
@@ -4198,13 +4199,13 @@ class Master extends CI_Controller {
                 a.cheq_dd_no like '%". $srch_key ."%'
             )";
         }
-        
-        $this->db->where($where);
-        $this->db->from('crit_receipt_info a');
-        $this->db->where('a.status', 'Active');
+    
 
-        
-        $data['total_records'] = $cnt = $this->db->count_all_results();
+
+         $this->db->where('a.status != ', 'Delete'); 
+        $this->db->where($where); 
+        $this->db->from('crit_receipt_info as a');         
+        $data['total_records'] = $cnt  = $this->db->count_all_results();  
         
         $data['sno'] = $this->uri->segment(2, 0);
         
@@ -4278,6 +4279,44 @@ class Master extends CI_Controller {
         
         $this->load->view('page/receipt-list', $data);
     }
+
+    public function get_autocomplete_data()
+{
+    if(!$this->session->userdata('cr_logged_in')) {
+        echo json_encode(array());
+        exit;
+    }
+    
+    // Fetch unique receipt_from values
+    $this->db->distinct();
+    $this->db->select('receipt_from');
+    $this->db->where('status', 'Active');
+    $this->db->order_by('receipt_from', 'ASC');
+    $query = $this->db->get('crit_receipt_info');
+    $receipt_from = array_column($query->result_array(), 'receipt_from');
+    
+    // Fetch unique receipt_to values
+    $this->db->distinct();
+    $this->db->select('receipt_to');
+    $this->db->where('status', 'Active');
+    $this->db->order_by('receipt_to', 'ASC');
+    $query = $this->db->get('crit_receipt_info');
+    $receipt_to = array_column($query->result_array(), 'receipt_to');
+    
+    // Fetch unique branch values
+    $this->db->distinct();
+    $this->db->select('branch');
+    $this->db->where('status', 'Active');
+    $this->db->order_by('branch', 'ASC');
+    $query = $this->db->get('crit_receipt_info');
+    $branch = array_column($query->result_array(), 'branch');
+    
+    echo json_encode(array(
+        'receipt_from' => $receipt_from,
+        'receipt_to' => $receipt_to,
+        'branch' => $branch
+    ));
+}
 
 
         public function receipt_list_print($receipt_id)

@@ -4,7 +4,7 @@
 
 <div class="toolbar">
     <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
-    <button class="btn btn-download" onclick="downloadPDF()">⬇️ Download PDF</button>
+ 
     <a class="btn btn-primary"href="<?php echo site_url('receipt-list') ?>">Back To List</a>
 </div>
 

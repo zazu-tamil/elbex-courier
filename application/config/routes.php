@@ -103,6 +103,8 @@ $route['ts-invoice-list/(:num)'] = 'booking/ts_invoice_list/$1';
 $route['stationery-invoice-list'] = 'booking/stationery_invoice_list';
 $route['stationery-invoice-list/(:num)'] = 'booking/stationery_invoice_list/$1';
 
+
+
 $route['print-ts-invoice/(:num)'] = 'booking/print_ts_invoice/$1';
 $route['print-ts-invoice-v2/(:num)/(:num)'] = 'booking/print_ts_invoice_v2/$1/$2';
 
@@ -233,3 +235,9 @@ $route['stationery-item-list'] = 'master/stationery_item_list';
 $route['stationery-item-list/(:num)'] = 'master/stationery_item_list/$1';
 
 $route['domestic-rate'] = 'master/domestic_rate';
+
+
+$route['receipt-list'] = 'master/receipt_list';
+$route['receipt-list/(:num)'] = 'master/receipt_list/$1';
+
+$route['receipt-list-print/(:num)'] = 'master/receipt_list_print/$1';

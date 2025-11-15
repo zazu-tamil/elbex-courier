@@ -551,6 +551,41 @@ class General extends CI_Controller {
        $rec_id =$this->input->post('id');
        
         $this->db->query('SET SQL_BIG_SELECTS=1');
+
+
+
+   
+
+       if($table == 'get-receipt')
+       {
+          $query = $this->db->query("
+            SELECT 
+                receipt_id,
+                payment_type,
+                receipt_date,
+                receipt_no,
+                branch,
+                receipt_from,
+                receipt_to,
+                payment_mode,
+                cheq_dd_no,
+                cheq_dd_date,
+                payment_desc,
+                payment_amt
+            FROM crit_receipt_info
+            WHERE receipt_id = '". $rec_id ."'
+        ");
+             
+           $rec_list = array();  
+    
+            foreach($query->result_array() as $row)
+            {  
+                $rec_list  = $row;      
+            }  
+          
+       }
+
+
         
         if($table == 'franchise_awbill_info')
        {
@@ -2219,6 +2254,15 @@ class General extends CI_Controller {
         
         $table = $this->input->post('tbl') ;
         $rec_id =$this->input->post('id');
+
+
+           if($table == 'receipt_info')
+        {
+             $this->db->where('receipt_id', $rec_id);
+             $this->db->update('crit_receipt_info', array('status' => 'Delete'));
+               
+             echo 'Record Successfully deleted';  
+        } 
         
         if($table == 'franchise_awbill_info')
         {

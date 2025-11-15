@@ -4103,4 +4103,217 @@ class Master extends CI_Controller {
         
         $this->load->view('page/stationery-item-list',$data); 
 	} 
+
+
+
+    public function receipt_list()
+    {
+        if(!$this->session->userdata('cr_logged_in')) redirect();
+        
+        $data['js'] = 'receipt-list.inc';
+        
+        // Add Receipt
+        if($this->input->post('mode') == 'Add')
+        {
+            $ins = array(
+                'payment_type' => $this->input->post('payment_type'),
+                'receipt_date' => $this->input->post('receipt_date'),
+                'receipt_no' => $this->input->post('receipt_no'),
+                'branch' => $this->input->post('branch'),
+                'receipt_from' => $this->input->post('receipt_from'),
+                'receipt_to' => $this->input->post('receipt_to'),
+                'payment_mode' => $this->input->post('payment_mode'),
+                'cheq_dd_no' => $this->input->post('cheq_dd_no'),
+                'cheq_dd_date' => $this->input->post('cheq_dd_date'),
+                'payment_desc' => $this->input->post('payment_desc'),
+                'payment_amt' => $this->input->post('payment_amt'),
+                'created_by' => $this->session->userdata('cr_user_id'),
+                'created_date' => date('Y-m-d H:i:s')
+            );
+            
+            $this->db->insert('crit_receipt_info', $ins);
+            redirect('receipt-list');
+        }
+        
+        // Edit Receipt
+        if($this->input->post('mode') == 'Edit')
+        {
+            $upd = array(
+                'payment_type' => $this->input->post('payment_type'),
+                'receipt_date' => $this->input->post('receipt_date'),
+                'receipt_no' => $this->input->post('receipt_no'),
+                'branch' => $this->input->post('branch'),
+                'receipt_from' => $this->input->post('receipt_from'),
+                'receipt_to' => $this->input->post('receipt_to'),
+                'payment_mode' => $this->input->post('payment_mode'),
+                'cheq_dd_no' => $this->input->post('cheq_dd_no'),
+                'cheq_dd_date' => $this->input->post('cheq_dd_date'),
+                'payment_desc' => $this->input->post('payment_desc'),
+                'payment_amt' => $this->input->post('payment_amt'),
+                'updated_by' => $this->session->userdata('cr_user_id'),
+                'updated_date' => date('Y-m-d H:i:s')
+            );
+            
+            $this->db->where('receipt_id', $this->input->post('receipt_id'));
+            $this->db->update('crit_receipt_info', $upd);
+            
+            redirect('receipt-list/' . $this->uri->segment(2, 0));
+        }
+        
+        $this->load->library('pagination');
+        
+        // Search Parameters
+        if(isset($_POST['srch_payment_type'])) {
+            $data['srch_payment_type'] = $srch_payment_type = $this->input->post('srch_payment_type');
+            $this->session->set_userdata('srch_payment_type', $this->input->post('srch_payment_type'));
+        }
+        elseif($this->session->userdata('srch_payment_type')){
+            $data['srch_payment_type'] = $srch_payment_type = $this->session->userdata('srch_payment_type');
+        } else {
+            $data['srch_payment_type'] = $srch_payment_type = '';
+        }
+        
+        if(isset($_POST['srch_key'])) {
+            $data['srch_key'] = $srch_key = $this->input->post('srch_key');
+            $this->session->set_userdata('srch_key', $this->input->post('srch_key'));
+        }
+        elseif($this->session->userdata('srch_key')){
+            $data['srch_key'] = $srch_key = $this->session->userdata('srch_key');
+        } else {
+            $data['srch_key'] = $srch_key = '';
+        }
+        
+        $where = '1';
+        
+        if(!empty($srch_payment_type)){
+            $where .= " and a.payment_type = '". $srch_payment_type ."'";
+        }
+        
+        if(!empty($srch_key)) {
+            $where .= " and ( 
+                a.receipt_no like '%". $srch_key ."%' or 
+                a.branch like '%". $srch_key ."%' or 
+                a.receipt_from like '%". $srch_key ."%' or 
+                a.receipt_to like '%". $srch_key ."%' or 
+                a.cheq_dd_no like '%". $srch_key ."%'
+            )";
+        }
+        
+        $this->db->where($where);
+        $this->db->from('crit_receipt_info a');
+        $this->db->where('a.status', 'Active');
+
+        
+        $data['total_records'] = $cnt = $this->db->count_all_results();
+        
+        $data['sno'] = $this->uri->segment(2, 0);
+        
+        $config['base_url'] = trim(site_url('receipt-list/'), '/'. $this->uri->segment(2, 0));
+        $config['total_rows'] = $cnt;
+        $config['per_page'] = 20;
+        $config['uri_segment'] = 2;
+        $config['attributes'] = array('class' => 'page-link');
+        $config['full_tag_open'] = '<ul class="pagination pagination-sm no-margin pull-right">';
+        $config['full_tag_close'] = '</ul>';
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="page-item active"><a href="#" class="page-link">';
+        $config['cur_tag_close'] = '<span class="sr-only">(current)</span></a></li>';
+        $config['prev_tag_open'] = '<li class="page-item">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li class="page-item">';
+        $config['next_tag_close'] = '</li>';
+        $config['first_tag_open'] = '<li class="page-item">';
+        $config['first_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li class="page-item">';
+        $config['last_tag_close'] = '</li>';
+        $config['prev_link'] = "Prev";
+        $config['next_link'] = "Next";
+        $this->pagination->initialize($config);
+        
+        $sql = "
+            SELECT 
+                a.receipt_id,
+                a.payment_type,
+                a.receipt_date,
+                a.receipt_no,
+                a.branch,
+                a.receipt_from,
+                a.receipt_to,
+                a.payment_mode,
+                a.cheq_dd_no,
+                a.cheq_dd_date,
+                a.payment_desc,
+                a.payment_amt
+            FROM crit_receipt_info as a
+            WHERE a.status != 'Delete'
+            and ". $where ."
+            ORDER BY a.receipt_date DESC, a.receipt_no DESC
+            LIMIT ". $this->uri->segment(2, 0) .",". $config['per_page'] ."
+        ";
+        
+        $query = $this->db->query($sql);
+        
+        $data['record_list'] = array();
+        foreach ($query->result_array() as $row)
+        {
+            $data['record_list'][] = $row;
+        }
+        
+        // Payment Type Options
+        $data['payment_type_opt'] = array(
+            'Paid' => 'Paid',
+            'Received' => 'Received'
+        );
+        
+        // Payment Mode Options
+        $data['payment_mode_opt'] = array(
+            '' => 'Select',
+            'Cash' => 'Cash',
+            'Cheque' => 'Cheque',
+            'DD' => 'DD'
+        );
+        
+        $data['pagination'] = $this->pagination->create_links();
+        
+        $this->load->view('page/receipt-list', $data);
+    }
+
+
+        public function receipt_list_print($receipt_id)
+	{
+	    if(!$this->session->userdata('cr_logged_in'))  redirect();
+        
+        /*if($this->session->userdata('m_is_admin') != USER_ADMIN) 
+        {
+            echo "<h3 style='color:red;'>Permission Denied</h3>"; exit;
+        } */
+        	     $data['js'] = 'receipt-list-print.inc';
+          
+
+        
+        $sql = "
+                select  
+                *
+                from crit_receipt_info as a
+                where a.`status` != 'Delete' 
+                and a.receipt_id in (". $receipt_id .")     
+                order by a.receipt_id asc                
+        ";
+        
+        
+        $query = $this->db->query($sql); 
+       
+        foreach ($query->result_array() as $row)
+        {
+            $data['receipt_list'][] = $row;     
+        }
+        
+            
+        $this->load->view('page/receipt-list-print',$data); 
+	}  
+
+
+
+
 }

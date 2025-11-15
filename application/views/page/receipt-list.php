@@ -124,14 +124,7 @@
                     <label>Receipt Date</label>
                     <input class="form-control" type="date" name="receipt_date" id="receipt_date" value="" required>                                             
                   </div> 
-                  <div class="form-group col-md-6">
-                    <label>Receipt No</label>
-                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required>                                             
-                  </div>  
-                </div> 
-
-                <div class="row"> 
-                  <div class="form-group col-md-6">
+                   <div class="form-group col-md-6">
                     <label>Payment Type <span style="color:red;">*</span></label>
                     <div class="radio">
                       <label>
@@ -144,53 +137,56 @@
                       </label>
                     </div> 
                   </div>
+                  <!-- <div class="form-group col-md-6">
+                    <label>Receipt No</label>
+                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required>                                             
+                  </div>   -->
+                </div> 
 
+                <div class="row"> 
                   <div class="form-group col-md-6">
                     <label>Payment Mode <span style="color:red;">*</span></label>
                     <?php echo form_dropdown('payment_mode', $payment_mode_opt, '', ' id="payment_mode" class="form-control" required');?>
                   </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-6">
+               
+                   <div class="form-group col-md-6">
                     <label>Receipt From</label>
                     <input class="form-control" type="text" name="receipt_from" id="receipt_from" value="" placeholder="From" required>                                             
                   </div> 
+                  </div> 
+
+                <div class="row">
                   <div class="form-group col-md-6">
                     <label>Receipt To</label>
                     <input class="form-control" type="text" name="receipt_to" id="receipt_to" value="" placeholder="To" required>                                             
                   </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                     <label>Branch</label>
                     <input class="form-control" type="text" name="branch" id="branch" value="" placeholder="Branch Name" required>                                             
                   </div> 
+                </div>
+                <div class="row">
                   <div class="form-group col-md-6">
                     <label>Amount</label>
                     <input class="form-control" type="number" step="0.01" name="payment_amt" id="payment_amt" value="" placeholder="0.00" required>                                             
                   </div>
+                     <div class="form-group col-md-6">
+                    <label>Cheque/DD No</label>
+                    <input class="form-control" type="text" name="cheq_dd_no" id="cheq_dd_no" value="" placeholder="Cheque/DD Number">                                             
+                  </div> 
                 </div>
 
                 <div class="row" id="cheque_dd_row" style="display:none;">
                   <div class="form-group col-md-6">
-                    <label>Cheque/DD No</label>
-                    <input class="form-control" type="text" name="cheq_dd_no" id="cheq_dd_no" value="" placeholder="Cheque/DD Number">                                             
-                  </div> 
-                  <div class="form-group col-md-6">
                     <label>Cheque/DD Date</label>
                     <input class="form-control" type="date" name="cheq_dd_date" id="cheq_dd_date" value="">                                             
                   </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-12">
+                      <div class="form-group col-md-12">
                     <label>Description</label>
                     <textarea class="form-control" name="payment_desc" id="payment_desc" placeholder="Payment Description"></textarea>                                             
                   </div>  
                 </div>
-              </div>
+                </div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
@@ -222,7 +218,7 @@
                   </div> 
                   <div class="form-group col-md-6">
                     <label>Receipt No</label>
-                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required>                                             
+                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required readonly>                                             
                   </div>  
                 </div> 
 

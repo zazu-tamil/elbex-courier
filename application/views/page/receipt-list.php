@@ -126,7 +126,7 @@
                   </div> 
                   <div class="form-group col-md-6">
                     <label>Receipt No</label>
-                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" required>                                             
+                    <input class="form-control" type="number" name="receipt_no" id="receipt_no" value="" placeholder="0001" readonly>                                             
                   </div>  
                 </div> 
 

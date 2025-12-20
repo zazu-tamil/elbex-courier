@@ -5,6 +5,9 @@
 <div class="toolbar">
     <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
     <button class="btn btn-download" onclick="downloadPDF()">⬇️ Download PDF</button>
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+    <a href="<?php echo site_url('receipt-list'); ?>" class="btn btn-back">🔙 Back to Receipt List</a>
 </div>
 
 <?php 

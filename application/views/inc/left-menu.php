@@ -110,6 +110,7 @@
               <li <?php if($this->uri->segment(1, 0) === 'stationery-invoice-list') echo 'class="active"'; ?>><a href="<?php echo site_url('stationery-invoice-list') ?>"><i class="fa fa-circle-o"></i> Stationery Invoice List</a></li>
           </ul>
         </li>
+        <li <?php if($this->uri->segment(1, 0) === 'receipt-list') echo 'class="active"'; ?>><a href="<?php echo site_url('receipt-list') ?>"><i class="fa fa-circle-o"></i> Receipt List</a></li>
         <?php }  ?> 
         <li class="header">Reports</li>
         <li class="treeview <?php if(in_array($this->uri->segment(1, 0),array('customer-booking-report','city-wise-booking-summary','franchise-booking-report','franchise-NDR-report','manifest-report','drs-report','inbound-consignment-report','servicable-pincode-report' ))) echo 'active'; ?>">

@@ -4118,7 +4118,7 @@ class Master extends CI_Controller {
             $ins = array(
                 'payment_type' => $this->input->post('payment_type'),
                 'receipt_date' => $this->input->post('receipt_date'),
-                'receipt_no' => $this->input->post('receipt_no'),
+                //'receipt_no' => $this->input->post('receipt_no'),
                 'branch' => $this->input->post('branch'),
                 'receipt_from' => $this->input->post('receipt_from'),
                 'receipt_to' => $this->input->post('receipt_to'),
@@ -4271,6 +4271,7 @@ class Master extends CI_Controller {
             '' => 'Select',
             'Cash' => 'Cash',
             'Cheque' => 'Cheque',
+            'Bank' => 'Bank',
             'DD' => 'DD'
         );
         

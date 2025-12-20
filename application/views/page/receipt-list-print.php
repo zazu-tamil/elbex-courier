@@ -21,7 +21,11 @@ if(isset($receipt_list) && !empty($receipt_list)) {
         $isReceived = (strtolower(trim($receipt['payment_type'])) == 'received');
 ?>
 
-<div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
+
+
+    <?php if($isReceived): ?>
+
+        <div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
     <div class="header">
         <div class="logo-section">
             <div class="logo">
@@ -51,8 +55,7 @@ if(isset($receipt_list) && !empty($receipt_list)) {
         <div class="branch-label" style="margin-left: 20px;">Date :</div>
         <div class="branch-value" style="max-width: 150px;"><?php echo $receipt['receipt_date'] ? date('d-m-Y', strtotime($receipt['receipt_date'])) : ''; ?></div>
     </div>
-
-    <?php if($isReceived): ?>
+        
         <!-- RECEIVED FORMAT -->
         <div class="company-row">
             <div class="company-label">RECEIVED with thanks from M/s.</div>
@@ -104,6 +107,37 @@ if(isset($receipt_list) && !empty($receipt_list)) {
         </div>
         
     <?php else: ?>
+
+        <div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">
+                <img src="<?php echo base_url('asset/images/logo1.png'); ?>" alt="ELBEX Logo">
+            </div>
+            <div class="company-info">
+                <h1>ELBEX Couriers Pvt. Ltd.</h1>
+                <p>258, Avarampalayam Road, New Siddapudur,</p>
+                <p>Coimbatore - 641 044, Tamil Nadu, INDIA.</p>
+                <p>MOB : 95 666 0 99 11, Tel : 0422 - 4388573.</p>
+                <p>Web : www.elbex.in</p>
+            </div>
+        </div>
+        <div class="receipt-header">
+            <div class="receipt-label">Voucher</div>
+            <div class="receipt-copy">CLIENT COPY</div>
+            <div class="receipt-no-row">
+                <div class="receipt-no-label">Voucher No. :</div>
+                <div class="receipt-no"><?php echo str_pad($receipt['receipt_no'], 4, '0', STR_PAD_LEFT); ?></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="branch-row">
+        <div class="branch-label">Branch :</div>
+        <div class="branch-value"><?php echo htmlspecialchars($receipt['branch']); ?></div>
+        <div class="branch-label" style="margin-left: 20px;">Date :</div>
+        <div class="branch-value" style="max-width: 150px;"><?php echo $receipt['receipt_date'] ? date('d-m-Y', strtotime($receipt['receipt_date'])) : ''; ?></div>
+    </div>
         <!-- PAID FORMAT -->
         <div class="company-row">
             <div class="company-label">Paid to</div>
@@ -149,15 +183,15 @@ if(isset($receipt_list) && !empty($receipt_list)) {
         <div style="display: flex; justify-content: space-between; margin-top: 60px;">
             <div class="bottom-note" style="text-align: center; flex: 1;">
                 Prepared by<br>
-                <div style="border-top: 1px solid #000; margin-top: 40px; padding-top: 5px;"></div>
+                <div style=" margin-top: 40px; padding-top: 5px;"></div>
             </div>
             <div class="bottom-note" style="text-align: center; flex: 1;">
                 Authorized By<br>
-                <div style="border-top: 1px solid #000; margin-top: 40px; padding-top: 5px;"></div>
+                <div style=" margin-top: 40px; padding-top: 5px;"></div>
             </div>
             <div class="bottom-note" style="text-align: center; flex: 1;">
                 Received By<br>
-                <div style="border-top: 1px solid #000; margin-top: 40px; padding-top: 5px;"></div>
+                <div style=" margin-top: 40px; padding-top: 5px;"></div>
             </div>
         </div>
     <?php endif; ?>

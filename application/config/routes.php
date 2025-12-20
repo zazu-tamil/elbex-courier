@@ -238,6 +238,7 @@ $route['domestic-rate'] = 'master/domestic_rate';
 
 
 $route['receipt-list'] = 'master/receipt_list';
+$route['get-autocomplete-data'] = 'master/get_autocomplete_data';
 $route['receipt-list/(:num)'] = 'master/receipt_list/$1';
 
 $route['receipt-list-print/(:num)'] = 'master/receipt_list_print/$1';

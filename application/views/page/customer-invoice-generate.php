@@ -124,6 +124,7 @@
             <div class="box-body text-center">
                 <div class="row">
                     <div class="form-group col-md-3">  
+                      <label for="">Invoice Date</label>
                         <div class="input-group date">
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
@@ -131,6 +132,10 @@
                           <input type="text" class="form-control pull-right datepicker" id="invoice_date" name="invoice_date" value="<?php echo set_value('invoice_date',date('Y-m-d'));?>">
                         </div>                                           
                     </div>
+                    <div class="form-group col-md-3">
+                      <label for="">Invoice No</label>
+                      <input type="text" class="form-control pull-right" id="invoice_no" name="invoice_no" value="<?php echo set_value('invoice_no');?>" placeholder="Invoice No" required>
+                    </div>  
                     <div class="form-group col-md-3">
                         <input type="hidden" name="customer_id" value="<?php echo $srch_customer_id; ?>" />
                         <input type="submit" class="btn btn-success" name="btn_generate" value="Generate Invoice" />

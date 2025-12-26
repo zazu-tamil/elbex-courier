@@ -880,6 +880,7 @@ class General extends CI_Controller {
                 a.city_code, 
                 a.branch_code, 
                 a.hub_code, 
+                a.bank_det, 
                 a.servicable_pincode,
                 a.`status`
                 from crit_franchise_info as a 

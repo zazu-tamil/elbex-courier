@@ -977,6 +977,7 @@ class Master extends CI_Controller {
                     'servicable_pincode' => implode(',',$this->input->post('servicable_pincode')),
                     'branch_code' => $this->input->post('branch_code'),
                     'hub_code' => $this->input->post('hub_code'),
+                    'bank_det' => $this->input->post('bank_det'),
                     'status' => $this->input->post('status'),
                     'created_by' => $this->session->userdata('cr_user_id'),                          
                     'created_datetime' => date('Y-m-d H:i:s')                           
@@ -1001,6 +1002,7 @@ class Master extends CI_Controller {
                     'servicable_pincode' => implode(',',$this->input->post('servicable_pincode')),
                     'branch_code' => $this->input->post('branch_code'),
                     'hub_code' => $this->input->post('hub_code'),
+                    'bank_det' => $this->input->post('bank_det'),
                     'status' => $this->input->post('status')  , 
                     'updated_by' => $this->session->userdata('cr_user_id'),                          
                     'updated_datetime' => date('Y-m-d H:i:s')                 
@@ -2046,8 +2048,9 @@ class Master extends CI_Controller {
                     'city_code' => $this->input->post('city_code'),
                     'pincode' => $this->input->post('pincode'),
                     'status' => $this->input->post('status'),
-                    'franchise_type_id' => $this->input->post('franchise_type_id'),
+                    //'franchise_type_id' => $this->input->post('franchise_type_id'),
                     'franchise_id' => ($this->input->post('franchise_id') != '' ? $this->input->post('franchise_id') : $this->session->userdata('cr_franchise_id')),
+                    'franchise_type_id' => ($this->input->post('franchise_type_id') != '' ? $this->input->post('franchise_type_id') : $this->session->userdata('cr_franchise_type_id')),
                     'created_by' => $this->session->userdata('cr_user_id'),                          
                     'created_datetime' => date('Y-m-d H:i:s')                           
             );
@@ -2073,7 +2076,7 @@ class Master extends CI_Controller {
                     'city_code' => $this->input->post('city_code'),
                     'pincode' => $this->input->post('pincode'),
                     'status' => $this->input->post('status'),
-                    'franchise_type_id' => $this->input->post('franchise_type_id'),
+                    'franchise_type_id' => ($this->input->post('franchise_type_id') != '' ? $this->input->post('franchise_type_id') : $this->session->userdata('cr_franchise_type_id')),
                     'franchise_id' => ($this->input->post('franchise_id') != '' ? $this->input->post('franchise_id') : $this->session->userdata('cr_franchise_id')),
                     'updated_by' => $this->session->userdata('cr_user_id'),                          
                     'updated_datetime' => date('Y-m-d H:i:s')                 

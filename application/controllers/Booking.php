@@ -4100,7 +4100,7 @@ class Booking extends CI_Controller {
                     $invoice_no = $row->invoice_no;
                 }
                 */
-                
+                /*
                 $query = $this->db->query("select `generate_invoice_no`('". $this->input->post('invoice_date') ."') as invoice_no ");
                 $row = $query->row();
                 if (isset($row)) {
@@ -4116,14 +4116,16 @@ class Booking extends CI_Controller {
                 $row = $query->row();
                 if (isset($row)) {
                     $invoice_amount = $row->invoice_amount;
-                }  
+                }
+                */  
                 
                 $ins  = array(
                         'invoice_date' => $this->input->post('invoice_date'),
                         'customer_id' => $this->input->post('customer_id')  ,                          
                         'awb_nos' => implode(',',$awb_nos)  ,                          
                         'invoice_amount' => $invoice_amount  ,                          
-                        'invoice_no' => $invoice_no  ,                          
+                        //'invoice_no' => $invoice_no  ,                          
+                        'invoice_no' => $this->input->post('invoice_no')  ,                           
                         'status' => 'Pending' , 
                         'created_by' =>  $this->session->userdata('cr_user_id'),
                         'created_datetime' => date('Y-m-d H:i:s')   
@@ -4161,8 +4163,13 @@ class Booking extends CI_Controller {
         $data['submit_flg'] = true;
          
        }    
-        
-        
+        $data['customer_opt'] = array();
+        if($this->session->userdata('cr_is_admin') == '1') { 
+            $where_cls = " 1=1 ";
+        } else {
+            $franchise_id = $this->session->userdata('cr_franchise_id');
+            $where_cls = " a.franchise_id = '". $franchise_id ."' ";
+        }
         $sql = "
                 select 
                 a.customer_id,                
@@ -4171,6 +4178,7 @@ class Booking extends CI_Controller {
                 a.customer_code            
                 from crit_customer_info as a  
                 where status = 'Active' 
+                and $where_cls
                 order by a.company , a.contact_person asc                 
         "; 
         
@@ -4262,7 +4270,13 @@ class Booking extends CI_Controller {
          
        }    
         
-        
+       $data['customer_opt'] = []; 
+       if($this->session->userdata('cr_is_admin') == '1') { 
+            $where_cls = " 1=1 ";
+        } else {
+            $franchise_id = $this->session->userdata('cr_franchise_id');
+            $where_cls = " a.franchise_id = '". $franchise_id ."' ";
+        }
         $sql = "
                 select 
                 a.customer_id,                
@@ -4271,6 +4285,7 @@ class Booking extends CI_Controller {
                 a.customer_code            
                 from crit_customer_info as a  
                 where status = 'Active' 
+                and $where_cls
                 order by a.company , a.contact_person asc                 
         "; 
         
@@ -4278,7 +4293,7 @@ class Booking extends CI_Controller {
        
         foreach ($query->result_array() as $row)
         {
-            $data['customer_opt'][$row['customer_id']] = $row['company']. ' - ' . $row['contact_person']  ;     
+            $data['customer_opt'][$row['customer_id']] = $row['customer_code'] . ':' . $row['company']. ' - ' . $row['contact_person']  ;     
         }
         
         if($data['submit_flg']) {
@@ -4358,6 +4373,33 @@ class Booking extends CI_Controller {
             echo "<h3 style='color:red;'>Permission Denied</h3>"; exit;
         } */
         	    
+
+        if($this->session->userdata('cr_is_admin') == '1') { 
+             $data['franchise'] = [];
+        } else {
+            $franchise_id = $this->session->userdata('cr_franchise_id');
+
+            $sql = "
+                select 
+                a.franchise_id, 
+                a.contact_person, 
+                a.mobile, 
+                a.phone, 
+                a.email, 
+                a.gst_no, 
+                a.address, 
+                a.state_code,  
+                a.`status`
+                from crit_franchise_info as a  
+                where a.status != 'Delete' 
+                and a.franchise_id = '". $franchise_id ."'
+                order by a.franchise_id asc                 
+                ";
+
+                 $query = $this->db->query($sql); 
+                 $data['franchise'] = $query->result_array();
+            
+        }     
           
         
          
@@ -4377,9 +4419,17 @@ class Booking extends CI_Controller {
                 b.state_code,
                 a.awb_nos,
                 a.invoice_amount, 
-                a.`status`
+                a.`status`,
+                c.address as franchise_address,
+                c.state_code as f_state_code,
+                c.gst_no as f_gst_no,
+                c.email as f_email,
+                c.phone as f_phone,
+                c.mobile as f_mobile,
+                c.bank_det
                 from crit_customer_invoice_info as a
                 left join crit_customer_info as b on b.customer_id= a.customer_id
+                left join crit_franchise_info as c on c.franchise_id= b.franchise_id
                 where a.`status` != 'Delete' 
                 and a.customer_invoice_id = '". $invoice_id ."'      
                 order by a.invoice_date desc                 

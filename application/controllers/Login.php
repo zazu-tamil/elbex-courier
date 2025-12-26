@@ -35,7 +35,8 @@ public function index()
               a.city ,
               a.franchise_id ,
               b.branch_code,
-              b.hub_code
+              b.hub_code,
+              b.franchise_type_id
               from crit_user_info as a  
               left join crit_franchise_info as b on b.franchise_id = a.franchise_id
               where a.user_name = '".($this->input->post('user_name'))."' 
@@ -61,6 +62,7 @@ public function index()
                    'cr_pstate'  => $row->state, 
                    'cr_pcity'  => $row->city, 
                    'cr_franchise_id'  => $row->franchise_id, 
+                   'cr_franchise_type_id'  => $row->franchise_type_id, 
                    'cr_is_admin'  =>  $row->level, 
                    'cr_branch_code'  =>  $row->branch_code, 
                    'cr_hub_code'  =>  $row->hub_code, 

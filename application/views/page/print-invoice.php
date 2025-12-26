@@ -1,3 +1,8 @@
+<!-- <?php 
+echo "<pre>";
+print_r($record_list);  
+echo "</pre>";
+?> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,25 +55,26 @@
     <!-- info row -->
     <div class="row invoice-info">
       <div class="col-sm-4 invoice-col">
-        From
+        <b>From</b>
         <address>
-          <strong>Elbex Couriers Private Limited </strong><br>
+          <!-- <strong>Elbex Couriers Private Limited </strong><br>
           No.258 Avarampalayam Road,<br>
           New Siddapudur,<br>
-          Coimbatore - 641 044.<br> 
-          Email: info@elbex.in <br>
-          <b>GST : 33AACCE3779K2ZD</b>
+          Coimbatore - 641 044.<br>  -->
+          <?php echo str_replace("\n",'<br>', $record_list['franchise_address']); ?><br>
+          Email: <?php echo $record_list['f_email']; ?> <br>
+          <b>GST : <?php echo $record_list['f_gst_no']; ?></b>
         </address>
       </div>
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
-        To
+        <b>To</b>
         <address>
           <strong><?php echo $record_list['customer']?></strong><br>
-          <?php echo str_replace(',',',<br>', $record_list['address']);?><br>
+          <?php echo str_replace("\n",'<br>', $record_list['address']);?><br>
           Email: <?php echo $record_list['email']?><br>
           Phone: <?php echo $record_list['phone']?> - Mobile: <?php echo $record_list['mobile']?><br />
-          GST: <?php echo $record_list['gst_no']?>
+          <b>GST: <?php echo $record_list['gst_no']?></b>
         </address>
       </div>
       <!-- /.col -->
@@ -133,12 +139,14 @@
       <div class="col-xs-6">
         <p class="lead">Terms & Conditions</p>
          
-        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px; text-transform:capitalize;"> 
+        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px; "> 
 
-        1. Please Make Payment By Cash/ Rtgs/ Neft  Only.<br />
+        1. Please Make Payment By Cash/ RTGS/ NEFT  Only.<br />
         
-        2. The  Payment Should Be Transferred To  The Account Under   The Name Of "Elbex Couriers Pvt Limited".<br /> A/C Number : 50200007833315.<br /> Ifsc Code :Hdfc 0000031,<br /> Hdfc Bank Ltd, Trichy Road Branch.<br /> Coimbatore.<br />
-        
+        2. The  Payment Should Be Transferred To  The Account Under   The Name Of 
+        <br />
+        <?php echo str_replace("\n","<br>",$record_list['bank_det']); ?>
+        <br />        
         3. The Payment Should Be Made Within 7 Days From The Date Of Billing.<br />
         
         4. In Case The  Payment Is Not Made Within 15 Days From The Date Of Billing,  Interest Will Be Charged At The Rate Of  21 % Per Annum.<br />
@@ -171,7 +179,7 @@
                 <td><i class="fa fa-rupee"></i> <?php echo number_format($fuel_charges,2);?></td>
             </tr>
             <?php //} ?>
-            <?php if($record_list['state_code'] != 'TN') {?>
+            <?php if($record_list['state_code'] != $record_list['f_state_code']) {?>
             <tr>
               <th>IGST (18%)</th>
               <td><i class="fa fa-rupee"></i> <?php echo number_format($tax_amt,2);?></td>

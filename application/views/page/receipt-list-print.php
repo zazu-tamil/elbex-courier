@@ -61,7 +61,7 @@ if(isset($receipt_list) && !empty($receipt_list)) {
             <div class="company-label">RECEIVED with thanks from M/s.</div>
             <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_from']); ?></div>
         </div>
-        
+        <?php if($receipt['payment_mode'] == 'Cheque' or $receipt['payment_mode'] == 'DD'): ?>
         <div class="payment-row">
             <div class="payment-part">
                 <span class="payment-label">by <?php echo htmlspecialchars($receipt['payment_mode']); ?> No. :</span>
@@ -77,24 +77,37 @@ if(isset($receipt_list) && !empty($receipt_list)) {
                 
             </div>
         </div>
-        <div class="separator-line"><?php echo htmlspecialchars($receipt['payment_desc']); ?></div>
-        
-        
-        
         <div class="rupees-row">
             <div class="rupees-label">the sum of Rupees</div>
             <div class="rupees-value"><?php echo $amount_words; ?></div>
         </div>
+        <div class="separator-line">towards <?php echo htmlspecialchars($receipt['payment_desc']); ?></div> 
+        <?php else: ?>
+            
+        <div class="company-row">
+            <div class="company-label">by <?php echo htmlspecialchars($receipt['payment_mode']); ?>,</div>
+            <div class="company-label">the sum of Rupees</div>
+            <div class="company-value"><?php echo $amount_words; ?></div>
+        </div>
+        <div class="company-row">
+             <div class="company-label">towards </div>
+              <div class="company-value"><?php echo htmlspecialchars($receipt['payment_desc']); ?></div> 
+              <div class="company-label">for </div>
+              <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_to']); ?></div> 
+        </div> 
+         
+         
+        <?php endif; ?>
+        
         
         <div class="purpose-row">
-            <div class="purpose-text">in full / part payment of appointment towards Unit Franchisee.</div>
+            <div class="purpose-text">as in full / part payment of appointment towards Unit Franchisee.</div>
         </div>
         
         <div class="footer">
             <div class="amount-section">
                 <span class="amount-label">Rs.</span>
-                <span class="amount-value"><?php echo number_format($receipt['payment_amt'], 2); ?></span>
-                <span class="amount-label">/-</span>
+                <span class="amount-value"><?php echo number_format($receipt['payment_amt'], 2); ?>/-</span> 
             </div>
             <div class="signature-section">
                 <div class="signature-text">For ELBEX Couriers Pvt. Ltd.</div>

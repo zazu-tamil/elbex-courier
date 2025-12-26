@@ -38,8 +38,8 @@
                  </div>
                  <div class="form-group col-md-4">
                     <label>Customer</label>
-                      <div class="input-group">
-                        <?php echo form_dropdown('srch_customer_id',array('' => 'Select') + $customer_opt  ,set_value('srch_customer_id','') ,' id="srch_customer_id" class="form-control"');?> 
+                      <div class="form-group">
+                        <?php echo form_dropdown('srch_customer_id',array('' => 'Select') + $customer_opt  ,set_value('srch_customer_id','') ,' id="srch_customer_id" class="form-control select2" style="width:100%;" ');?> 
                             
                       </div>                                   
                  </div>  

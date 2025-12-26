@@ -104,6 +104,7 @@ jQuery(function($) {
               $('#edit_modal #state_code').val(d.state_code) ;   
               $('#edit_modal #branch_code').val(d.branch_code) ;   
               $('#edit_modal #hub_code').val(d.hub_code) ;   
+              $('#edit_modal #bank_det').val(d.bank_det) ;   
                
               $('#edit_modal input:radio[value="'+ d.status +'"]').prop('checked', true); 
               

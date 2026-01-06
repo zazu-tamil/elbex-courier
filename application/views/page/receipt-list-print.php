@@ -5,8 +5,8 @@
 <div class="toolbar">
     <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
     <button class="btn btn-download" onclick="downloadPDF()">⬇️ Download PDF</button>
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
+    &nbsp;&nbsp;
+    &nbsp;&nbsp;
     <a href="<?php echo site_url('receipt-list'); ?>" class="btn btn-back">🔙 Back to Receipt List</a>
 </div>
 
@@ -23,9 +23,9 @@ if(isset($receipt_list) && !empty($receipt_list)) {
 
 
 
-    <?php if($isReceived): ?>
+<?php if($isReceived): ?>
 
-        <div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
+<div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
     <div class="header">
         <div class="logo-section">
             <div class="logo">
@@ -48,115 +48,123 @@ if(isset($receipt_list) && !empty($receipt_list)) {
             </div>
         </div>
     </div>
-    
+
     <div class="branch-row">
         <div class="branch-label">Branch :</div>
         <div class="branch-value"><?php echo htmlspecialchars($receipt['branch']); ?></div>
         <div class="branch-label" style="margin-left: 20px;">Date :</div>
-        <div class="branch-value" style="max-width: 150px;"><?php echo $receipt['receipt_date'] ? date('d-m-Y', strtotime($receipt['receipt_date'])) : ''; ?></div>
+        <div class="branch-value" style="max-width: 150px;">
+            <?php echo $receipt['receipt_date'] ? date('d-m-Y', strtotime($receipt['receipt_date'])) : ''; ?></div>
     </div>
-        
-        <!-- RECEIVED FORMAT -->
-        <div class="company-row">
-            <div class="company-label">RECEIVED with thanks from M/s.</div>
-            <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_from']); ?></div>
+
+    <!-- RECEIVED FORMAT -->
+    <div class="company-row">
+        <div class="company-label">RECEIVED with thanks from M/s.</div>
+        <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_from']); ?></div>
+    </div>
+    <?php if($receipt['payment_mode'] == 'Cheque' or $receipt['payment_mode'] == 'DD'): ?>
+    <div class="payment-row">
+        <div class="payment-part">
+            <span class="payment-label">by <?php echo htmlspecialchars($receipt['payment_mode']); ?> No. :</span>
+            <span class="payment-value short"><?php echo htmlspecialchars($receipt['cheq_dd_no']); ?></span>
         </div>
-        <?php if($receipt['payment_mode'] == 'Cheque' or $receipt['payment_mode'] == 'DD'): ?>
-        <div class="payment-row">
-            <div class="payment-part">
-                <span class="payment-label">by <?php echo htmlspecialchars($receipt['payment_mode']); ?> No. :</span>
-                <span class="payment-value short"><?php echo htmlspecialchars($receipt['cheq_dd_no']); ?></span>
-            </div>
-            <div class="payment-part">
-                <span class="payment-label">Dated :</span>
-                <span class="payment-value medium"><?php echo $receipt['cheq_dd_date'] ? date('d-m-Y', strtotime($receipt['cheq_dd_date'])) : ''; ?></span>
-            </div>
-            <div class="payment-part">
-                <span class="payment-label">Drawn on</span>
-                <span class="payment-value long"><?php echo htmlspecialchars($receipt['receipt_to']); ?></span>
-                
-            </div>
+        <div class="payment-part">
+            <span class="payment-label">Dated :</span>
+            <span
+                class="payment-value medium"><?php echo $receipt['cheq_dd_date'] ? date('d-m-Y', strtotime($receipt['cheq_dd_date'])) : ''; ?></span>
         </div>
-        <div class="rupees-row">
-            <div class="rupees-label">the sum of Rupees</div>
-            <div class="rupees-value"><?php echo $amount_words; ?></div>
+        <div class="payment-part">
+            <span class="payment-label">Drawn on</span>
+            <span class="payment-value long"><?php echo htmlspecialchars($receipt['receipt_to']); ?></span>
+
         </div>
-        <div class="separator-line">towards <?php echo htmlspecialchars($receipt['payment_desc']); ?></div> 
-        <?php else: ?>
-            
-        <div class="company-row">
-            <div class="company-label">by <?php echo htmlspecialchars($receipt['payment_mode']); ?>,</div>
-            <div class="company-label">the sum of Rupees</div>
-            <div class="company-value"><?php echo $amount_words; ?></div>
-        </div>
-        <div class="company-row">
-             <div class="company-label">towards </div>
-              <div class="company-value"><?php echo htmlspecialchars($receipt['payment_desc']); ?></div> 
-              <div class="company-label">for </div>
-              <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_to']); ?></div> 
-        </div> 
-         
-         
-        <?php endif; ?>
-        
-        
-        <div class="purpose-row">
-            <div class="purpose-text">as in full / part payment of appointment towards Unit Franchisee.</div>
-        </div>
-        
-        <div class="footer">
-            <div class="amount-section">
-                <span class="amount-label">Rs.</span>
-                <span class="amount-value"><?php echo number_format($receipt['payment_amt'], 2); ?>/-</span> 
-            </div>
-            <div class="signature-section">
-                <div class="signature-text">For ELBEX Couriers Pvt. Ltd.</div>
-                <div class="signature-line"></div>
-            </div>
-        </div>
-        
-        <div class="bottom-note">
-            *Subject to Realisation of Cheques
-        </div>
-        
+    </div>
+    <div class="rupees-row">
+        <div class="rupees-label">the sum of Rupees</div>
+        <div class="rupees-value"><?php echo $amount_words; ?></div>
+    </div>
+    <div class="separator-line">towards <?php echo htmlspecialchars($receipt['payment_desc']); ?></div>
     <?php else: ?>
 
-        <div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
-    <div class="header">
-        <div class="logo-section">
-            <div class="logo">
-                <img src="<?php echo base_url('asset/images/logo1.png'); ?>" alt="ELBEX Logo">
-            </div>
-            <div class="company-info">
-                <h1>ELBEX Couriers Pvt. Ltd.</h1>
-                <p>258, Avarampalayam Road, New Siddapudur,</p>
-                <p>Coimbatore - 641 044, Tamil Nadu, INDIA.</p>
-                <p>MOB : 95 666 0 99 11, Tel : 0422 - 4388573.</p>
-                <p>Web : www.elbex.in</p>
-            </div>
+    <div class="company-row">
+        <div class="company-label">by <?php echo htmlspecialchars($receipt['payment_mode']); ?>,</div>
+        <div class="company-label">the sum of Rupees</div>
+        <div class="company-value"><?php echo $amount_words; ?></div>
+    </div>
+    <div class="company-row">
+        <div class="company-label">towards </div>
+        <div class="company-value"><?php echo htmlspecialchars($receipt['payment_desc']); ?></div>
+        <div class="company-label">for </div>
+        <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_to']); ?></div>
+    </div>
+
+
+    <?php endif; ?>
+
+
+    <div class="purpose-row">
+        <div class="purpose-text">as in full / part payment of appointment towards Unit Franchisee.</div>
+    </div>
+
+    <div class="footer">
+        <div class="amount-section">
+            <span class="amount-label">Rs.</span>
+            <span class="amount-value"><?php echo number_format($receipt['payment_amt'], 2); ?>/-</span>
         </div>
-        <div class="receipt-header">
-            <div class="receipt-label">Voucher</div>
-            <div class="receipt-copy">CLIENT COPY</div>
-            <div class="receipt-no-row">
-                <div class="receipt-no-label">Voucher No. :</div>
-                <div class="receipt-no"><?php echo str_pad($receipt['receipt_no'], 4, '0', STR_PAD_LEFT); ?></div>
-            </div>
+        <div class="signature-section">
+
+        </div>
+        <div class="signature-section" style=" padding:10px; width:250px; text-align:center;">
+            <div class="signature-text">For ELBEX Couriers Pvt. Ltd.</div>
+            <div class="signature-line">
+                <img src="<?php echo base_url('asset/images/elbex-rseal.png')?>" alt="" class="img-md"> 
+            </div> 
         </div>
     </div>
-    
-    <div class="branch-row">
-        <div class="branch-label">Branch :</div>
-        <div class="branch-value"><?php echo htmlspecialchars($receipt['branch']); ?></div>
-        <div class="branch-label" style="margin-left: 20px;">Date :</div>
-        <div class="branch-value" style="max-width: 150px;"><?php echo $receipt['receipt_date'] ? date('d-m-Y', strtotime($receipt['receipt_date'])) : ''; ?></div>
+
+    <div class="bottom-note">
+        *Subject to Realisation of Cheques
     </div>
+
+    <?php else: ?>
+
+    <div class="receipt-container" id="receiptContent_<?php echo $receipt['receipt_id']; ?>">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="<?php echo base_url('asset/images/logo1.png'); ?>" alt="ELBEX Logo">
+                </div>
+                <div class="company-info">
+                    <h1>ELBEX Couriers Pvt. Ltd.</h1>
+                    <p>258, Avarampalayam Road, New Siddapudur,</p>
+                    <p>Coimbatore - 641 044, Tamil Nadu, INDIA.</p>
+                    <p>MOB : 95 666 0 99 11, Tel : 0422 - 4388573.</p>
+                    <p>Web : www.elbex.in</p>
+                </div>
+            </div>
+            <div class="receipt-header">
+                <div class="receipt-label">Voucher</div>
+                <div class="receipt-copy">CLIENT COPY</div>
+                <div class="receipt-no-row">
+                    <div class="receipt-no-label">Voucher No. :</div>
+                    <div class="receipt-no"><?php echo str_pad($receipt['receipt_no'], 4, '0', STR_PAD_LEFT); ?></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="branch-row">
+            <div class="branch-label">Branch :</div>
+            <div class="branch-value"><?php echo htmlspecialchars($receipt['branch']); ?></div>
+            <div class="branch-label" style="margin-left: 20px;">Date :</div>
+            <div class="branch-value" style="max-width: 150px;">
+                <?php echo $receipt['receipt_date'] ? date('d-m-Y', strtotime($receipt['receipt_date'])) : ''; ?></div>
+        </div>
         <!-- PAID FORMAT -->
         <div class="company-row">
             <div class="company-label">Paid to</div>
             <div class="company-value"><?php echo htmlspecialchars($receipt['receipt_from']); ?></div>
         </div>
-        
+
         <div class="rupees-row">
             <div class="rupees-label">the sum of Rupees</div>
             <div class="rupees-value"><?php echo $amount_words; ?></div>
@@ -182,7 +190,8 @@ if(isset($receipt_list) && !empty($receipt_list)) {
             </div>
             <div class="payment-part">
                 <span class="payment-label">Dated :</span>
-                <span class="payment-value medium"><?php echo $receipt['cheq_dd_date'] ? date('d-m-Y', strtotime($receipt['cheq_dd_date'])) : ''; ?></span>
+                <span
+                    class="payment-value medium"><?php echo $receipt['cheq_dd_date'] ? date('d-m-Y', strtotime($receipt['cheq_dd_date'])) : ''; ?></span>
             </div>
         </div>
         <?php endif; ?>
@@ -207,10 +216,10 @@ if(isset($receipt_list) && !empty($receipt_list)) {
                 <div style=" margin-top: 40px; padding-top: 5px;"></div>
             </div>
         </div>
-    <?php endif; ?>
-</div>
+        <?php endif; ?>
+    </div>
 
-<?php 
+    <?php 
     }
 } else {
     echo "<h3 style='color:red;'>No receipts found.</h3>";
@@ -219,9 +228,9 @@ if(isset($receipt_list) && !empty($receipt_list)) {
 
 
 
-<?php include_once(VIEWPATH . '/inc/footer.php'); ?>
+    <?php include_once(VIEWPATH . '/inc/footer.php'); ?>
 
-<?php
+    <?php
 // Helper function to convert number to words
 function convertNumberToWords($number) {
     $ones = array('', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine');

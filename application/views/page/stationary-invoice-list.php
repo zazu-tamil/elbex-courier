@@ -51,6 +51,41 @@
          </div> 
          </div> 
          <?php if(($submit_flg)) { ?>         
+         <div class="box box-info"> 
+            <div class="box-header with-border">
+              <h3 class="box-title text-white">Franchises AWB Issued Details - Last 15 Records</h3> 
+                 
+            </div>
+            <div class="box-body">  
+                <?php  if(!empty($awbill_list)) { ?>   
+                     <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr class="bg-blue-gradient">
+                            <th>SNo</th> 
+                            <th>AWB Serial From</th>
+                            <th>AWB Serial To</th>
+                            <th>Remarks</th>  
+                            <th>Date</th>  
+                        </tr> 
+                        </thead> 
+                        <tbody>
+                            <?php 
+                            foreach($awbill_list as $j => $ls) {   
+                            ?>
+                            <tr>
+                                <td><?php echo ($j+1)?></td> 
+                                <td><?php echo $ls['awbill_from']?></td>
+                                <td><?php echo $ls['awbill_to']?></td> 
+                                <td><?php echo $ls['remarks']?></td> 
+                                <td><?php echo date('d-m-Y' , strtotime($ls['created_date']))?></td> 
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                        </table>
+                <?php  } else {  echo "<h4 class='text-warning'>No records found</h4>"; } ?>    
+             </div>   
+         </div>
+
          <div class="box box-success"> 
             <div class="box-header with-border">
               <h3 class="box-title text-white">Franchises Stationery Invoice List</h3> 

@@ -4042,6 +4042,24 @@ class Booking extends CI_Controller {
         {
             $data['record_list'][] = $row;     
         }
+
+         $sql = "
+                select 
+                a.*
+                from crit_franchise_awbill_info as a 
+                where a.status != 'Delete' 
+                and franchise_id = $srch_franchise_id
+                order by a.status asc , a.created_date desc 
+                limit  15                
+        ";
+        
+        //a.status = 'Booked'  
+        
+        $query = $this->db->query($sql); 
+
+        $data['awbill_list'] = array();
+
+        $data['awbill_list'] = $query->result_array(); 
         
         $data['pagination'] = $this->pagination->create_links();
         }

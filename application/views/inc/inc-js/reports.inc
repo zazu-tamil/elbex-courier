@@ -1,3 +1,5 @@
+ 
+
 <link rel="stylesheet" href="<?php echo base_url() ?>asset/plugins/iCheck/all.css"> 
 <link rel="stylesheet" href="<?php echo base_url() ?>asset/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap datepicker -->
@@ -7,7 +9,10 @@
 <script src="<?php echo base_url() ?>asset/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo base_url() ?>asset/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="<?php echo base_url() ?>asset/plugins/iCheck/icheck.min.js"></script>
-<script src="https://rawgit.com/Snack-X/excelexport.js/master/excelexport.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+
 <link rel="stylesheet" href="<?php echo base_url() ?>asset/bower_components/select2/dist/css/select2.min.css">
 <script src="<?php echo base_url() ?>asset/bower_components/select2/dist/js/select2.full.min.js"></script>
 <style>
@@ -79,13 +84,30 @@ jQuery(function($) {
      
     
  
-	$(".dl-xls").click(function() {   
+	//$(".dl-xls").click(function() {   
     
-    var ee = excelExport("content-table").parseToCSV().parseToXLS($(this).attr('data')); 
-		location.href = ee.getXLSDataURI();
-	});
+    //var ee = excelExport("content-table").parseToCSV().parseToXLS($(this).attr('data')); 
+		//location.href = ee.getXLSDataURI();
+
+    //downloadExcel();
+	//});
+
+
+  $(document).on('click', '.dl-xls', function () {
+
+      var fileName = $(this).attr('data') || 'Report';
+
+      let table = document.getElementById("content-table");
+
+      let workbook = XLSX.utils.table_to_book(table, { sheet: "Report" });
+
+      XLSX.writeFile(workbook, fileName + ".xlsx");
+  });
+
+ 
        
     
 }); 
  
 </script> 
+ 

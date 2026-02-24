@@ -736,10 +736,13 @@ class Master extends CI_Controller {
                 a.service_by, 
                 a.`status` 
                 from crit_servicable_pincode_info as a 
-                left join crit_states_info as b on b.state_code = a.state_code and b.status = 'Active'
-                left join crit_city_info as c on c.state_code = a.state_code and c.city_code = a.branch_code and c.status = 'Active'
-                left join crit_city_info as d on  d.city_code = a.ops_by and d.status = 'Active'
+                left join crit_states_info as b on b.state_code = a.state_code 
+                left join crit_city_info as c on c.state_code = a.state_code and c.city_code = a.branch_code 
+                left join crit_city_info as d on  d.city_code = a.ops_by 
                 where  a.status != 'Delete'  
+                and c.status = 'Active'
+                and b.status = 'Active'
+                and d.status = 'Active'
                 order by a.status asc , a.pincode asc  
         "; 
           

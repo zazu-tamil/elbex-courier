@@ -898,7 +898,7 @@ class Master extends CI_Controller {
         $this->db->query("SET SQL_BIG_SELECTS=1");
         
         $sql = "
-                select DISTINCT
+                select 
                 a.pincode_id, 
                 a.pincode, 
                 a.area, 
@@ -915,10 +915,14 @@ class Master extends CI_Controller {
                 a.`status`,
                 a.serve_type
                 from crit_servicable_pincode_info as a 
-                left join crit_states_info as b on b.state_code = a.state_code and b.status = 'Active'
-                left join crit_city_info as c on c.state_code = a.state_code and c.city_code = a.branch_code and c.status = 'Active'
-                left join crit_city_info as d on  d.city_code = a.ops_by and d.status = 'Active'
-                where  a.status != 'Delete' and ". $where ."
+                left join crit_states_info as b on b.state_code = a.state_code 
+                left join crit_city_info as c on c.state_code = a.state_code and c.city_code = a.branch_code 
+                left join crit_city_info as d on  d.city_code = a.ops_by 
+                where  a.status != 'Delete' 
+                and c.status = 'Active'
+                and d.status = 'Active'
+                and b.status = 'Active'
+                and ". $where ."
                 order by a.status asc , a.pincode asc 
                 limit ". $this->uri->segment(2, 0) .",". $config['per_page'] ."                
         ";

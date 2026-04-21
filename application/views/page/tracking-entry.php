@@ -166,7 +166,7 @@
         <div class="box box-info"> 
             <div class="box-header with-border">
               <h3 class="box-title text-white">Customer Tracking Status Info</h3>
-              <?php if($this->session->userdata('cr_is_admin') == '1' || $this->session->userdata('cr_franchise_id') == '380') {  ?>
+              <?php if($this->session->userdata('cr_is_admin') == '1' || $this->session->userdata('cr_franchise_id') == '380' || $this->session->userdata('cr_franchise_id') == '483') {  ?>
                  <div class="pull-right">
                     <button class="btn btn-success" data-toggle="modal" data-target="#add_modal"><i class="fa fa-plus-circle"></i> Add Tracking Status</button>
                  </div>

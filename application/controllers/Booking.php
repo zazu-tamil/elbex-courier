@@ -2298,6 +2298,7 @@ class Booking extends CI_Controller {
             $data['sflg'] = true;
            $sql = "
                 select 
+
                 a.awbno,
                 c.drs_no, 
                 a.origin_state_code,
@@ -2321,6 +2322,7 @@ class Booking extends CI_Controller {
                 left join crit_drs_info as c on c.awbno = a.awbno
                 where a.awbno = '". $this->input->post('awbno') ."'  
                 and a.status !='Delete'
+                group by a.awbno
                 order by a.dest_pincode asc 
                               
              "; 
@@ -2352,6 +2354,7 @@ class Booking extends CI_Controller {
                 from crit_manifest_info as a
                 left join crit_co_loader_info as c on c.co_loader_id = a.co_loader_id
                 where a.awbno = '". $this->input->post('awbno') ."'  
+                and a.del_flg != '1'
                 order by a.manifest_date  asc 
             "; 
             
@@ -2381,6 +2384,7 @@ class Booking extends CI_Controller {
             a.delivered_time  
             from crit_drs_info as a 
             where a.awbno = '". $this->input->post('awbno') ."'  
+            and a.del_flg != '1'
             order by a.drs_date , a.drs_time asc 
         "; 
         
@@ -2402,6 +2406,7 @@ class Booking extends CI_Controller {
             from crit_drs_ndr_info as a
             left join crit_ndr_info as c on c.ndr_id = a.ndr_id
             where a.awbno = '". $this->input->post('awbno') ."'  
+            and a.del_flg != '1'
             order by a.ndr_date , a.ndr_time asc 
         "; 
         

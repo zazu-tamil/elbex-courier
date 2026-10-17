@@ -103,7 +103,7 @@ if(isset($receipt_list) && !empty($receipt_list)) {
 
 
     <div class="purpose-row">
-        <div class="purpose-text">as in full / part payment of appointment towards Unit Franchisee.</div>
+        <div class="purpose-text">as in full / part payment of appointment towards Franchisee.</div>
     </div>
 
     <div class="footer">
